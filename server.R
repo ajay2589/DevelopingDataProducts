@@ -1,7 +1,14 @@
 library(shiny)
+
+# data set and prediction
 library(datasets)
 library(caret)
 library(randomForest)
+
+# loading 
+data(iris)
+
+# prediction
 
 findSpecies <- function(sl,sw,pl,pw){
   result <- "versicolor"
@@ -24,9 +31,6 @@ findSpecies <- function(sl,sw,pl,pw){
   result
 }
 
-
-
-data(iris)
 shinyServer(
   function(input, output){
     output$species <- renderPrint({findSpecies(input$sl, input$sw, input$pl, input$pw)})
