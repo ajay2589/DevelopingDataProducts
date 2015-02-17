@@ -1,0 +1,80 @@
+Plant Species Predictor
+========================================================
+author: Ajay
+date: `r date()`
+transition: rotate
+width: 1920
+height: 1080
+
+Sepal and Petal Dimensions
+========================================================
+
+- The plant species predictor works by analyzing the dimensions of the sepals and petals of the flower.
+
+- The features of the flower that are considered are
+  - Sepal Length and Sepal Width
+  - Petal Length and Petal Width
+  
+- The predictions are based on Edgar Anderson's `iris` dataset.
+
+- The species that are considered are `setosa`, `versicolor` and `virginica`.
+
+The data looks like this 
+
+```{r,width=1900}
+summary(iris)
+```
+
+ Edgar Anderson's iris
+========================================================
+
+Distribution of petals and sepals
+
+```{r myplot,echo=FALSE,fig.width=8,fig.height=4,dpi=300,out.width="1920px",height="1080px"}
+plot(iris$Petal.Length, iris$Petal.Width, pch=21, bg=c("red","green3","blue")[unclass(iris$Species)], main="Edgar Anderson's Iris Data", xlab="Petal Length", ylab="Petal Width")
+legend("topleft",inset=.05, as.vector(unique(iris$Species)),  fill=c("red", "green3", "blue"))
+```
+
+ Edgar Anderson's iris
+========================================================
+
+Distribution of sepals
+
+```{r myplot1,echo=FALSE,fig.width=7.6,fig.height=4,dpi=300,out.width="1920px",height="1080px"}
+plot(iris$Sepal.Length, iris$Sepal.Width, pch=21, bg=c("red","green3","blue")[unclass(iris$Species)], main="Edgar Anderson's Iris Data", xlab="Sepal Length", ylab="Sepal Width")
+legend("topleft",inset=.05, as.vector(unique(iris$Species)),  fill=c("red", "green3", "blue"))
+```
+
+
+Prediction
+========================================================
+
+```{r,echo=FALSE,results="hide"}
+library(caret)
+library(randomForest)
+Sepal.Length <- 6
+Sepal.Width <- 3
+Petal.Length <- 2
+Petal.Width <- 0.4
+```
+Something like this happens at the server.
+```{r}
+rfModel <- randomForest(Species~.,data=iris, ntree=100, importance=TRUE)
+temp <- cbind(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width)
+predictedSpecies <- predict(rfModel, temp, type="class")
+```
+```{r,echo=FALSE,results="hide"}
+  predictedSpecies <- predict(rfModel, temp, type="class")
+  if(predictedSpecies == "versicolor")
+    predictedSpecies <- "Versicolor"
+  if(predictedSpecies == "virginica")
+    predictedSpecies <- "Virginica"
+  if(predictedSpecies == "setosa")
+    predictedSpecies <- "Setosa"
+```
+```{r,echo=FALSE}
+predictedSpecies
+```
+And, something like this appears in the UI.
+
+![Species Predictor UI](predictor.png)
