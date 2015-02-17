@@ -48,8 +48,8 @@ shinyServer(
       )
       print(legend("topleft",inset=.05, as.vector(unique(iris$Species)),  fill=c("red", "green3", "blue")))
     })
-<<<<<<< HEAD
+
   })
-=======
+
   })
->>>>>>> origin/master
+
