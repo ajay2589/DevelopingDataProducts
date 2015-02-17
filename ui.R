@@ -5,6 +5,7 @@
 # http://www.rstudio.com/shiny/
 #
 
+require(markdown)
 library(shiny)
 
 #UI
