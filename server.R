@@ -34,5 +34,18 @@ findSpecies <- function(sl,sw,pl,pw){
 shinyServer(
   function(input, output){
     output$species <- renderPrint({findSpecies(input$sl, input$sw, input$pl, input$pw)})
+
+    output$plot1 <- renderPlot({
+      print(
+          plot(iris$Petal.Length, iris$Petal.Width, pch=21, bg=c("red","green3","blue")[unclass(iris$Species)], main="Edgar Anderson's Iris Data", xlab="Petal Length", ylab="Petal Width")
+        )
+      print(legend("topleft",inset=.05, as.vector(unique(iris$Species)),  fill=c("red", "green3", "blue")))
+    })
     
+    output$plot2 <- renderPlot({
+      print(
+        plot(iris$Sepal.Length, iris$Sepal.Width, pch=21, bg=c("red","green3","blue")[unclass(iris$Species)], main="Edgar Anderson's Iris Data", xlab="Sepal Length", ylab="Sepal Width")
+      )
+      print(legend("topleft",inset=.05, as.vector(unique(iris$Species)),  fill=c("red", "green3", "blue")))
+    })
   })
